@@ -1,10 +1,22 @@
-import styles from'./Card.module.scss'
-const Card = ({title, price, imageURL, onClick}) => {
+import styles from './Card.module.scss'
+import {useEffect, useState} from "react";
+
+const Card = ({title, price, imageURL, onPlus, onFavourite}) => {
+
+    const [isAdded, setIsAdded] = useState(false);
+
+    const handleClick = ()=>{
+         setIsAdded(!isAdded);
+    }
+
+    useEffect(() => {
+        console.log('чето поменялось')
+    }, [isAdded]);
 
     return (
         <div className={styles.card}>
             <div className={styles.favourite}>
-                <img src="/img/heart.svg" alt="favourite"/>
+                <img src="/img/heart.svg" alt="favourite" onClick={onFavourite}/>
             </div>
 
             <img width={133} height={112} src={imageURL} alt="sneakers"/>
@@ -14,11 +26,7 @@ const Card = ({title, price, imageURL, onClick}) => {
                     <span className='text-uppercase'>Цена:</span>
                     <b>{price} руб.</b>
                 </div>
-                <button style={{border: 'none', background: 'transparent'}} onClick={
-                    onClick
-                }>
-                    <img src='img/plus(add).svg' alt="add" className='cu-p'/>
-                </button>
+                <img src={isAdded ? 'img/plus(added).svg' : 'img/plus(add).svg'} alt="add" className='cu-p ' onClick={handleClick}/>
             </div>
         </div>
     )

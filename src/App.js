@@ -49,7 +49,8 @@ function App() {
                                 title={obj.title}
                                 price={obj.price}
                                 imageURL={obj.imageURL}
-                                onClick={()=>console.log(obj)}
+                                onFavourite={()=> console.log("Добавили в закладки")}
+                                onPlus={()=>console.log("Нажали на плюс")}
                             />
                         ))
                     }
