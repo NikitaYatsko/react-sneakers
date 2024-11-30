@@ -1,38 +1,37 @@
 import Card from "./components/Card/Card";
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
+import {useEffect, useState} from "react";
 
 function App() {
-    const arr = [
-        {
-            title: 'Мужские Кроссовки Nike Blazer Mid Seude',
-            price: 12999,
-            imageURL : '/img/image 1.jpeg'
-        },
-        {
-            title: 'Мужские Кроссовки Nike Air Max 270',
-            price: 15600,
-            imageURL : '/img/image 2.jpeg'
 
-        },
-        {
-            title: 'Мужские Кроссовки Nike Blazer Mid Seude',
-            price: 8499,
-            imageURL : '/img/image 3.jpeg'
+    const [items, setItems] = useState([]);
+    const [cartIsOpen, setCartIsOpen] = useState(false);
+    const [cartItems, setCartItems] = useState([]);
 
-        },
-        {
-            title: 'Кроссовки Puma X Aka Boku Future Rider',
-            price: 8999,
-            imageURL : '/img/image 4.jpeg'
 
-        },
+    useEffect(() => {
+        fetch('https://674b618e71933a4e885530ef.mockapi.io/items')
+            .then(res => {
+                return res.json()
+            })
+            .then(json => {
+                setItems(json);
+            });
 
-    ]
+    }, []);
+
+
+    const addToCard = (obj) => {
+        console.log(obj);
+        setCartItems((prev) => [...prev, obj]);
+        console.log(cartItems)
+    }
+
     return (
         <div className='wrapper clear p'>
-            <Drawer/>
-            <Header/>
+            {cartIsOpen && <Drawer onClose={() => setCartIsOpen(false)} cartItems={cartItems}/>}
+            <Header onClickCart={() => setCartIsOpen(true)}/>
 
             <div className="content p-40">
                 <div className='d-flex align-center justify-between'>
@@ -42,15 +41,17 @@ function App() {
                         <input placeholder='Поиск' type="text" className='ml-15'/>
                     </div>
                 </div>
-                <div className='d-flex mt-40'>
+                <div className='d-flex flex-wrap'>
                     {
-                        arr.map((obj) => (
+                        items.map((obj) => (
                             <Card
                                 title={obj.title}
                                 price={obj.price}
                                 imageURL={obj.imageURL}
-                                onFavourite={()=> console.log("Добавили в закладки")}
-                                onPlus={()=>console.log("Нажали на плюс")}
+                                onFavourite={() => console.log("Добавили в закладки")}
+                                onPlus={(obj) => {
+                                    addToCard(obj)
+                                }}
                             />
                         ))
                     }

@@ -1,17 +1,14 @@
 import styles from './Card.module.scss'
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
-const Card = ({title, price, imageURL, onPlus, onFavourite}) => {
+const Card = ({title, price, imageURL, onFavourite, onPlus}) => {
 
     const [isAdded, setIsAdded] = useState(false);
 
-    const handleClick = ()=>{
-         setIsAdded(!isAdded);
+    const handleClick = () => {
+        onPlus({title, price, imageURL});
+        setIsAdded(!isAdded);
     }
-
-    useEffect(() => {
-        console.log('чето поменялось')
-    }, [isAdded]);
 
     return (
         <div className={styles.card}>
@@ -26,7 +23,8 @@ const Card = ({title, price, imageURL, onPlus, onFavourite}) => {
                     <span className='text-uppercase'>Цена:</span>
                     <b>{price} руб.</b>
                 </div>
-                <img src={isAdded ? 'img/plus(added).svg' : 'img/plus(add).svg'} alt="add" className='cu-p ' onClick={handleClick}/>
+                <img src={isAdded ? 'img/plus(added).svg' : 'img/plus(add).svg'} alt="add" className='cu-p '
+                     onClick={handleClick}/>
             </div>
         </div>
     )
