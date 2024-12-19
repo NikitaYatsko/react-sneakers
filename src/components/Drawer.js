@@ -1,4 +1,4 @@
-const Drawer = ({onClose, cartItems = []}) => {
+const Drawer = ({onClose, onRemove, cartItems = []}) => {
 
     const calculateTotalPrice = () => {
         return cartItems.reduce((sum, item) => {
@@ -12,11 +12,20 @@ const Drawer = ({onClose, cartItems = []}) => {
 
     return (
         <div className='overlay'>
+
+
             <div className="drawer">
+
                 <h2 className="d-flex align-center justify-between ">
                     Корзина
                     <img src="/img/cart-button.svg" alt="remove" className='cart-remove_btn cu-p' onClick={onClose}/>
                 </h2>
+
+                <div className='cart-empty'>
+                    <h3 className="text-center">Ваша корзина сейчас пуста :(</h3>
+                    <button className='order-button'>Вернуться назад</button>
+                </div>
+
 
                 <div className="items">
                     {cartItems.map((obj, index) => (
@@ -30,7 +39,8 @@ const Drawer = ({onClose, cartItems = []}) => {
                                 </p>
                                 <b>{obj.price} руб.</b>
                             </div>
-                            <img src="/img/cart-button.svg" alt="remove" className='cart-remove_btn'
+                            <img onClick={() => onRemove(obj.id, calculateTotalPrice())} src="/img/cart-button.svg"
+                                 alt="remove" className='cart-remove_btn'
                             />
                         </div>
                     ))}
