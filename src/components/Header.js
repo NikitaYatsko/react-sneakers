@@ -9,7 +9,7 @@ const Header = ({onClickCart})=>{
                 </div>
             </div>
             <ul className='header-list d-flex align-center'>
-                <li className='mr-30 cu-p' onClick={onClickCart}>
+                <li className='mr-30 cu-p' onClick={onClickCart} >
                     <img width={18} height={18} src="/img/cart.svg" alt="cart" />
                     <span className='ml-10' >1205 руб.</span>
                 </li>

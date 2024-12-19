@@ -38,17 +38,24 @@ header {
 
 .search-block {
   border-radius: 10px;
-  padding: 14px;
+  padding: 14px;  position: relative;
 
   input {
+
     width: 200px;
     font-size: 16px;
     border: none;
     outline: none;
   }
+  .clear-input{
+    color: rgb(122, 122, 122);
+    cursor: pointer;
+    position: absolute;
+    right: 15px;
+  }
 
 
-  border: 1px solid rgb(243, 243, 243);
+  border: 1px solid rgb(156, 156, 156);
 }
 
 .overlay {
