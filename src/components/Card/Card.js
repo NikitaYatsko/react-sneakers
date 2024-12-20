@@ -4,6 +4,13 @@ import {useState} from "react";
 const Card = ({title, price, imageURL, onFavourite, onPlus}) => {
 
     const [isAdded, setIsAdded] = useState(false);
+    const [isFavourite, setIsFavourite] = useState(false);
+
+
+    const handleFavourite = () => {
+        setIsFavourite(!isFavourite);
+        onFavourite({title, price, imageURL});
+    }
 
     const handleClick = () => {
         onPlus({title, price, imageURL});
@@ -13,11 +20,12 @@ const Card = ({title, price, imageURL, onFavourite, onPlus}) => {
     return (
         <div className={styles.card}>
             <div className={styles.favourite}>
-                <img src="/img/heart.svg" alt="favourite" onClick={onFavourite}/>
+                <img src={!isFavourite ? "/img/heart.svg" : "/img/heart-acitve.svg"} alt="favourite"
+                     onClick={handleFavourite}/>
             </div>
 
             <img width={133} height={112} src={imageURL} alt="sneakers"/>
-            <p className='mt-15'>{title}</p>
+            <p className='mt-15'>{title}</p>W
             <div className='d-flex justify-between align-center mt-15'>
                 <div className='d-flex flex-column '>
                     <span className='text-uppercase'>Цена:</span>
