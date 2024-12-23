@@ -2,6 +2,7 @@ import Card from "./components/Card/Card";
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
 import {useEffect, useState} from "react";
+import {Route} from "react-router-dom";
 import axios from "axios";
 
 
@@ -57,6 +58,8 @@ function App() {
                 <Drawer onClose={() => setCartIsOpen(false)} cartItems={cartItems} setCartItems={setCartItems}
                         onRemove={removeFromCard}/>}
             <Header onClickCart={() => setCartIsOpen(true)}/>
+
+            <Route path='/favourites'>Хdfgdfgd!</Route>
 
             <div className="content p-40">
                 <div className='d-flex align-center justify-between'>
