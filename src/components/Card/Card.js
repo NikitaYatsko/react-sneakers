@@ -1,10 +1,10 @@
 import styles from './Card.module.scss'
 import {useState} from "react";
 
-const Card = ({title, price, imageURL, onFavourite, onPlus}) => {
+const Card = ({id, title, price, imageURL, onFavourite, onPlus, favourited = false}) => {
 
     const [isAdded, setIsAdded] = useState(false);
-    const [isFavourite, setIsFavourite] = useState(false);
+    const [isFavourite, setIsFavourite] = useState(favourited);
 
 
     const handleFavourite = () => {
@@ -13,7 +13,7 @@ const Card = ({title, price, imageURL, onFavourite, onPlus}) => {
     }
 
     const handleClick = () => {
-        onPlus({title, price, imageURL});
+        onPlus({id, title, price, imageURL});
         setIsAdded(!isAdded);
     }
 
@@ -25,7 +25,7 @@ const Card = ({title, price, imageURL, onFavourite, onPlus}) => {
             </div>
 
             <img width={133} height={112} src={imageURL} alt="sneakers"/>
-            <p className='mt-15'>{title}</p>W
+            <p className='mt-15'>{title}</p>
             <div className='d-flex justify-between align-center mt-15'>
                 <div className='d-flex flex-column '>
                     <span className='text-uppercase'>Цена:</span>
