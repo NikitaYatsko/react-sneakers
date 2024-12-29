@@ -52,15 +52,16 @@ function App() {
         setCartItems((prev) => prev.filter(item => item.id !== id));
     }
 
-    const addToFavourite = (obj) => {
-        if (favourites.find(item => item.id === obj.id)) {
-            axios.delete(`https://674b618e71933a4e885530ef.mockapi.io/favourites/${obj.id}`);
-            setFavourites((prev) => prev.filter((item) => item.id !== obj.id))
+
+    const addToFavourite = async (obj) => {
+        if (favourites.find((favObj) => favObj.id === obj.id)) {
+            axios.delete(`https://6765f128410f849996568313.mockapi.io/favourites/${obj.id}`);
+            setFavourites((prevState) => prevState.filter((item) => item.id !== obj.id))
         } else {
-            axios.post("https://6765f128410f849996568313.mockapi.io/favourites/", obj);
-            setFavourites((prev => [...prev, obj]));
+            const {data} = await axios.post("https://6765f128410f849996568313.mockapi.io/favourites", obj);
+            setFavourites((prevState) => [...prevState, data])
         }
-    }
+    };
 
     return (
         <div className='wrapper clear p'>

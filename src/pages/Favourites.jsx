@@ -16,10 +16,13 @@ const Favourites = ({items, onAddToFavourite}) => {
                 {
                     items.map((obj, index) => (
                         <Card
+                            favourites={items}
                             key={index}
                             onFavourite={onAddToFavourite}
                             favourited={true}
-                            {...obj}
+                            id={obj.id}
+                            imageURL={obj.imageURL}
+                            title={obj.title}
                         />
                     ))
                 }
