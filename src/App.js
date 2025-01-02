@@ -15,6 +15,21 @@ function App() {
     const [favourites, setFavourites] = useState([]);
     const [searchValue, setSearchValue] = useState('');
 
+    useEffect(() => {
+        const checkElement = (e) => {
+            if (e.target.classList.contains('overlay')) {
+                setCartIsOpen(false);
+            }
+        };
+
+        if (cartIsOpen) {
+            document.addEventListener('click', checkElement);
+        }
+
+        return () => {
+            document.removeEventListener('click', checkElement);
+        };
+    }, [cartIsOpen]);
 
     useEffect(() => {
         axios.get("https://674b618e71933a4e885530ef.mockapi.io/items").then(res => {
@@ -54,12 +69,16 @@ function App() {
 
 
     const addToFavourite = async (obj) => {
-        if (favourites.find((favObj) => favObj.id === obj.id)) {
-            axios.delete(`https://6765f128410f849996568313.mockapi.io/favourites/${obj.id}`);
-            setFavourites((prevState) => prevState.filter((item) => item.id !== obj.id))
-        } else {
-            const {data} = await axios.post("https://6765f128410f849996568313.mockapi.io/favourites", obj);
-            setFavourites((prevState) => [...prevState, data])
+        try {
+            if (favourites.find((favObj) => favObj.id === obj.id)) {
+                axios.delete(`https://6765f128410f849996568313.mockapi.io/favourites/${obj.id}`);
+                setFavourites((prevState) => prevState.filter((item) => item.id !== obj.id))
+            } else {
+                const {data} = await axios.post("https://6765f128410f849996568313.mockapi.io/favourites", obj);
+                setFavourites((prevState) => [...prevState, data])
+            }
+        } catch (error) {
+            alert('Не удалось добавить в фавориты');
         }
     };
 
