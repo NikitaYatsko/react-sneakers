@@ -15,6 +15,7 @@ function App() {
     const [favourites, setFavourites] = useState([]);
     const [searchValue, setSearchValue] = useState('');
 
+
     useEffect(() => {
         const checkElement = (e) => {
             if (e.target.classList.contains('overlay')) {
@@ -49,12 +50,17 @@ function App() {
 
 
     const addToCard = (obj) => {
-        console.log(obj);
-        setCartItems((prev) => [...prev, obj]);
-        console.log(cartItems)
-        axios.post("https://674b618e71933a4e885530ef.mockapi.io/cart", obj).then(r => {
-            console.log(r);
-        })
+        console.log(obj)
+        if (cartItems.find((cartObj) => Number(cartObj.id) === Number(obj.id))) {
+            axios.delete(`https://674b618e71933a4e885530ef.mockapi.io/cart/${obj.id}`);
+            setCartItems(prevState => prevState.filter(item => Number(item.id) !== Number(obj.id)));
+        } else {
+            axios.post("https://674b618e71933a4e885530ef.mockapi.io/cart", obj).then(r => {
+                console.log(r);
+            });
+            setCartItems((prev) => [...prev, obj]);
+        }
+
 
     }
 

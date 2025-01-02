@@ -23,8 +23,8 @@ const Drawer = ({onClose, onRemove, cartItems = []}) => {
                 {cartItems.length !== 0 ?
                     <>
                         <div className="items">
-                            {cartItems.map((obj, index) => (
-                                <div className="cart-item d-flex align-center justify-center " key={index}>
+                            {cartItems.map((obj) => (
+                                <div key={obj.id} className="cart-item d-flex align-center justify-center ">
                                     <div className='cart-item-img'>
                                         <img src={obj.imageURL} alt="" className='cart-item-img'/>
                                     </div>
