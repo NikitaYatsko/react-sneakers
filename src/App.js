@@ -33,19 +33,18 @@ function App() {
     }, [cartIsOpen]);
 
     useEffect(() => {
-        axios.get("https://674b618e71933a4e885530ef.mockapi.io/items").then(res => {
-            console.log(res.data);
-            setItems(res.data)
-        })
+        async function fetchData() {
 
-        axios.get("https://674b618e71933a4e885530ef.mockapi.io/cart").then(res => {
-            console.log(res.data);
-            setCartItems(res.data)
-        })
+            const cartResponse = await axios.get("https://674b618e71933a4e885530ef.mockapi.io/cart")
+            const favouritesResponse = await axios.get('https://6765f128410f849996568313.mockapi.io/favourites')
+            const itemsResponse = await axios.get("https://674b618e71933a4e885530ef.mockapi.io/items")
 
-        axios.get('https://6765f128410f849996568313.mockapi.io/favourites').then(res => {
-            setFavourites(res.data);
-        })
+            setItems(itemsResponse.data)
+            setCartItems(cartResponse.data)
+            setFavourites(favouritesResponse.data);
+        }
+
+        fetchData()
     }, []);
 
 
@@ -98,11 +97,13 @@ function App() {
 
             <Route path='/' exact>
                 <Home items={items}
+                      cartItems={cartItems}
                       searchValue={searchValue}
                       setSearchValue={setSearchValue}
                       onChangeSearchInput={onChangeSearchInput}
                       addToFavourite={addToFavourite}
                       addToCard={addToCard}
+
                 />
 
 
