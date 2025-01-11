@@ -1,6 +1,39 @@
 import Card from "../components/Card/Card";
 
-function Home({items, addToCard, addToFavourite, onChangeSearchInput, searchValue, setSearchValue, cartItems}) {
+function Home({
+                  isLoading,
+                  addToCard,
+                  addToFavourite,
+                  onChangeSearchInput,
+                  searchValue,
+                  setSearchValue,
+                  cartItems,
+                  items
+              }) {
+
+
+    const renderItems = () => {
+        const filteredItems = items.filter((item) =>
+            item.title.toLowerCase().includes(searchValue.toLowerCase())
+        );
+
+        return (isLoading ? [...Array(7)] : filteredItems).map((item, index) => (
+            <Card
+                key={index}
+                loading={isLoading && !item} // Передаём loading, если данные ещё загружаются
+                id={item?.id}
+                title={item?.title}
+                price={item?.price}
+                imageURL={item?.imageURL}
+                onFavourite={() => item && addToFavourite(item)}
+                added={item ? cartItems.some(obj => Number(obj.id) === Number(item.id)) : false}
+                onPlus={(obj) => item && addToCard(obj)}
+            />
+        ));
+    };
+
+
+
     return (
         <div className="content p-40">
             <div className='d-flex align-center justify-between'>
@@ -14,20 +47,7 @@ function Home({items, addToCard, addToFavourite, onChangeSearchInput, searchValu
             </div>
             <div className='d-flex flex-wrap'>
                 {
-                    items.filter(item => item.title.toLowerCase().includes(searchValue.toLowerCase())).map((item, index) => (
-                        <Card
-                            key={index}
-                            id={item.id}
-                            title={item.title}
-                            price={item.price}
-                            imageURL={item.imageURL}
-                            onFavourite={() => addToFavourite(item)}
-                            added={cartItems.some(obj => Number(obj.id) === Number(item.id))}
-                            onPlus={(obj) => {
-                                addToCard(obj)
-                            }}
-                        />
-                    ))
+                    renderItems()
                 }
             </div>
         </div>
